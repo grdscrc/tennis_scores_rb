@@ -14,12 +14,12 @@ class TennisScores
     end
 
     def scorePoint(player)
+        return scorePointTiebreak(player) if @tiebreak
+
         winner_index = player - 1
         loser_index = (winner_index + 1) % 2
-        gameScore = @game[winner_index]
-        gameScoreOpp = @game[loser_index]
 
-        if gameScore == :adv || gameScore == 40 && ![40, :adv].include?(gameScoreOpp)
+        if @game[winner_index] == :adv || @game[winner_index] == 40 && ![40, :adv].include?(@game[loser_index])
             @sets.last[winner_index] += 1
             if @sets.last[winner_index] - @sets.last[loser_index] >= 2  # 2 games ahead
                 if @sets.last[winner_index] >= 6
@@ -32,9 +32,25 @@ class TennisScores
             @game = [0, 0]
         else
             @game[winner_index] = nextScore(@game[winner_index])
-            if gameScoreOpp == :adv
+            if @game[loser_index] == :adv
                 @game[loser_index] = 40
             end
+        end
+
+        [*@sets, @game]
+    end
+
+    def scorePointTiebreak(player)
+        winner_index = player - 1
+        loser_index = (winner_index + 1) % 2
+
+        @game[winner_index] += 1
+        if @game[winner_index] >= 7 && @game[winner_index] >= @game[loser_index] + 2
+            @sets.last[winner_index] += 1
+            @sets.push([0,0])
+            
+            @game = [0, 0]
+            @tiebreak = false
         end
 
         [*@sets, @game]
