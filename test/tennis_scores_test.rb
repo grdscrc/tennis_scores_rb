@@ -58,4 +58,13 @@ class TestAdd < Test::Unit::TestCase
         @actual = @scoring.scorePoint(2)
         @expected = [[5, 7], [0, 0], [0, 0]]
     end
+
+    def test_tiebreak
+        @scoring.setScore([40, :adv], [[6, 5]])
+        @actual = @scoring.scorePoint(2)
+        @expected = [[6, 6], [0, 0]]
+        
+        assert @scoring.tiebreak?
+        # TODO : tiebreak scoring
+    end
 end

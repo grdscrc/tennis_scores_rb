@@ -1,9 +1,11 @@
 class TennisScores
-    attr_accessor :game, :sets
+    attr_reader :game, :sets, :tiebreak
+    alias_method :tiebreak?, :tiebreak
 
     def initialize
         @game = [0, 0]
         @sets = [[0, 0]]
+        @tiebreak = false
     end
 
     def setScore(game, sets = @sets)
@@ -23,6 +25,9 @@ class TennisScores
                 if @sets.last[winner_index] >= 6
                     @sets.push([0,0])
                 end
+            end
+            if [@sets.last[winner_index], @sets.last[loser_index]] == [6, 6]
+                @tiebreak = true
             end
             @game = [0, 0]
         else
