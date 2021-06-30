@@ -17,7 +17,7 @@ class TennisScores
         gameScore = @game[winner_index]
         gameScoreOpp = @game[loser_index]
 
-        if gameScore == :adv
+        if gameScore == :adv || gameScore == 40 && ![40, :adv].include?(gameScoreOpp)
             @sets.last[winner_index] += 1
             if @sets.last[winner_index] - @sets.last[loser_index] > 2  # 2 games ahead
                 if @sets.last[winner_index] >= 6
@@ -25,11 +25,11 @@ class TennisScores
                 end
             end
             @game = [0, 0]
-        elsif gameScoreOpp == :adv
-            @game[loser_index] = 40
-            @game[winner_index] = nextScore(@game[winner_index])
         else
             @game[winner_index] = nextScore(@game[winner_index])
+            if gameScoreOpp == :adv
+                @game[loser_index] = 40
+            end
         end
 
         [*@sets, @game]

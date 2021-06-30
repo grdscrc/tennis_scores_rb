@@ -17,6 +17,14 @@ class TestAdd < Test::Unit::TestCase
         assert_equal expected, actual
     end
 
+    def test_score_first_game_no_adv
+        scoring = TennisScores.new
+        scoring.setScore([15, 40])
+        actual = scoring.scorePoint(2)
+        expected = [[0, 1], [0, 0]]
+        assert_equal expected, actual
+    end
+
     def test_take_adv
         scoring = TennisScores.new
         scoring.setScore([:adv, 15])
