@@ -35,9 +35,25 @@ class TestAdd < Test::Unit::TestCase
 
     def test_win_first_set
         scoring = TennisScores.new
-        scoring.setScore([:adv, 15], [[5, 0]])
+        scoring.setScore([40, 15], [[5, 0]])
         actual = scoring.scorePoint(1)
         expected = [[6, 0], [0, 0], [0, 0]]
+        assert_equal expected, actual
+    end
+
+    def test_set_remains_if_less_than_two_games
+        scoring = TennisScores.new
+        scoring.setScore([40, 15], [[5, 5]])
+        actual = scoring.scorePoint(1)
+        expected = [[6, 5], [0, 0]]
+        assert_equal expected, actual
+    end
+
+    def test_win_set_by_two_games
+        scoring = TennisScores.new
+        scoring.setScore([40, :adv], [[5, 6]])
+        actual = scoring.scorePoint(2)
+        expected = [[5, 7], [0, 0], [0, 0]]
         assert_equal expected, actual
     end
 end
