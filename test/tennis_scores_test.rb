@@ -75,4 +75,14 @@ class TestAdd < Test::Unit::TestCase
         assert_equal expected, actual
         refute @scoring.tiebreak?
     end
+
+    # match
+    def test_win_match_best_of_three
+        @scoring.setScore([:adv, 40], [[6, 0],[0, 6], [5, 0]])
+        @actual = @scoring.scorePoint(1)
+        @expected = [[6, 0],[0, 6], [6, 0]]
+
+        assert @scoring.over?
+        assert_equal 1, @scoring.winner
+    end
 end
