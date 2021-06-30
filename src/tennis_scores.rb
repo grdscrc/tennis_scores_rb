@@ -4,7 +4,11 @@ class TennisScores
     def initialize
         @game = [0, 0]
         @sets = [[0, 0]]
-        self
+    end
+
+    def setScore(game, sets = @sets)
+        @game = game
+        @sets = sets
     end
 
     def scorePoint(player)
@@ -20,8 +24,10 @@ class TennisScores
             elsif @sets.last.min == @sets.last.max - 2
             else
             end
+            @game = [0, 0]
         elsif gameScoreOpp == :adv
-            @game = [40, 40]
+            @game[loser_index] = 40
+            @game[winner_index] = nextScore(@game[winner_index])
         else
             @game[winner_index] = nextScore(@game[winner_index])
         end
