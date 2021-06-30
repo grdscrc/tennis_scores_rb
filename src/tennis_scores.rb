@@ -77,4 +77,18 @@ class TennisScores
             :adv
         end
     end
+
+    def display
+        display = ''
+
+        if @over
+            display << " P L A Y E R #{@winner} \n"
+            display << " W I N S \n"
+            display << "Sets: #{@sets.map{|s| s.join(' - ')}.join(', ')}"
+        else
+            display << " T I E B R E A K \n" if @tiebreak
+            display << "Sets: #{@sets.map{|s| s.join(' - ')}.join(', ')}\n"
+            display << "Game: #{@game.join(' - ')}"
+        end
+    end
 end
