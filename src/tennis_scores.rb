@@ -18,11 +18,11 @@ class TennisScores
         gameScoreOpp = @game[loser_index]
 
         if gameScore == :adv
-            if @sets.last.max < 6
-                @sets.last[winner_index] += 1
-            elsif @sets.last.min < 5 # 2 games ahead
-            elsif @sets.last.min == @sets.last.max - 2
-            else
+            @sets.last[winner_index] += 1
+            if @sets.last[winner_index] - @sets.last[loser_index] > 2  # 2 games ahead
+                if @sets.last[winner_index] >= 6
+                    @sets.push([0,0])
+                end
             end
             @game = [0, 0]
         elsif gameScoreOpp == :adv
