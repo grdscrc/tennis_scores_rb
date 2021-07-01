@@ -101,6 +101,7 @@ class TennisScores
             display << "P2: #{@sets.map{|s| s[1]}.join('|')}"
         else
             display << " T I E B R E A K \n" if @tiebreak
+            display << "#{' ' * ((@sets.length * 2) - 1)}Sets -  Game\n"
             display << "P1: #{@sets.map{|s| s[0]}.join('|')} -  #{@game[0]}\n"
             display << "P2: #{@sets.map{|s| s[1]}.join('|')} -  #{@game[1]}"
         end
