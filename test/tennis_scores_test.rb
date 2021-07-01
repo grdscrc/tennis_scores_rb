@@ -17,7 +17,7 @@ class TennisScoresTest < Test::Unit::TestCase
     end
 
     def test_score_first_game
-        @scoring.setScore([:adv, 40])
+        @scoring.setScore([:Av, 40])
 
         @actual = @scoring.scorePoint(1)
         @expected = [[[1, 0]], [0, 0]]
@@ -31,7 +31,7 @@ class TennisScoresTest < Test::Unit::TestCase
     end
 
     def test_take_adv
-        @scoring.setScore([:adv, 15])
+        @scoring.setScore([:Av, 15])
 
         @actual = @scoring.scorePoint(2)
         @expected = [[[0, 0]], [40, 30]]
@@ -53,7 +53,7 @@ class TennisScoresTest < Test::Unit::TestCase
     end
 
     def test_win_set_by_two_games
-        @scoring.setScore([40, :adv], [[5, 6]])
+        @scoring.setScore([40, :Av], [[5, 6]])
 
         @actual = @scoring.scorePoint(2)
         @expected = [[[5, 7], [0, 0]], [0, 0]]
@@ -61,7 +61,7 @@ class TennisScoresTest < Test::Unit::TestCase
 
     # tiebreak
     def test_tiebreak
-        @scoring.setScore([40, :adv], [[6, 5]])
+        @scoring.setScore([40, :Av], [[6, 5]])
         actual = @scoring.scorePoint(2)
         expected = [[[6, 6]], [0, 0]]
 
@@ -78,7 +78,7 @@ class TennisScoresTest < Test::Unit::TestCase
 
     # match
     def test_win_match_best_of_three
-        @scoring.setScore([:adv, 40], [[6, 0],[0, 6], [5, 0]])
+        @scoring.setScore([:Av, 40], [[6, 0],[0, 6], [5, 0]])
         @actual = @scoring.scorePoint(1)
         @expected = [[6, 0],[0, 6], [6, 0]]
 
@@ -87,7 +87,7 @@ class TennisScoresTest < Test::Unit::TestCase
     end
 
     def test_win_match_on_tiebreak
-        @scoring.setScore([:adv, 40], [[6, 4], [6, 4], [5, 6]])
+        @scoring.setScore([:Av, 40], [[6, 4], [6, 4], [5, 6]])
         actual = @scoring.scorePoint(1)
         expected = [[[6, 4], [6, 4], [6, 6]], [0, 0]]
 

@@ -22,7 +22,7 @@ class TennisScores
         winner_index = player - 1
         loser_index = 1 - winner_index
 
-        if @game[winner_index] == :adv || @game[winner_index] == 40 && ![40, :adv].include?(@game[loser_index])
+        if @game[winner_index] == :Av || @game[winner_index] == 40 && ![40, :Av].include?(@game[loser_index])
             scoreSet(winner_index, loser_index)
 
             return @sets if @over
@@ -34,7 +34,7 @@ class TennisScores
             @game = [0, 0]
         else
             @game[winner_index] = nextScore(@game[winner_index])
-            if @game[loser_index] == :adv
+            if @game[loser_index] == :Av
                 @game[loser_index] = 40
             end
         end
@@ -87,7 +87,7 @@ class TennisScores
         when 30
             40
         when 40
-            :adv
+            :Av
         end
     end
 
