@@ -1,15 +1,16 @@
 #!/usr/local/bin/ruby -w
 require './src/tennis_scores.rb'
 
-scoring = TennisScores.new
-
 prompt = "> "
-puts "[1] Player one scores / [2] Player two scores / [exit]"
-print prompt
 
 loop do
+    puts "[1] Player one scores / [2] Player two scores / [stop] Stop the match"
+    print prompt
+
+    scoring = TennisScores.new
+
     while (input = gets.chomp) && !scoring.over?
-        break if input == 'exit'
+        break if input == 'stop'
         scoring_player = input.to_i
         if scoring_player > 2 || scoring_player < 1
             puts "Please input a player number"
@@ -18,10 +19,9 @@ loop do
 
             puts scoring.display
         end
-        print prompt
+        print prompt unless scoring.over?
     end
 
-    break if input == 'exit'
     puts "[restart] / [exit]"
     print prompt
     input = gets.chomp

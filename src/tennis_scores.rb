@@ -1,5 +1,6 @@
 class TennisScores
-    attr_reader :game, :sets, :tiebreak, :over, :winner
+    attr_reader :game, :sets, :tiebreak, :winner
+    attr_accessor :over
     alias_method :tiebreak?, :tiebreak
     alias_method :over?, :over
 
