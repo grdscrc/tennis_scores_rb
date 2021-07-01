@@ -97,11 +97,12 @@ class TennisScores
         if @over
             display << " P L A Y E R #{@winner} \n"
             display << " W I N S \n"
-            display << "Sets: #{@sets.map{|s| s.join(' - ')}.join(', ')}"
+            display << "P1: #{@sets.map{|s| s[0]}.join('|')}\n"
+            display << "P2: #{@sets.map{|s| s[1]}.join('|')}"
         else
             display << " T I E B R E A K \n" if @tiebreak
-            display << "Sets: #{@sets.map{|s| s.join(' - ')}.join(', ')}\n"
-            display << "Game: #{@game.join(' - ')}"
+            display << "P1: #{@sets.map{|s| s[0]}.join('|')} -  #{@game[0]}\n"
+            display << "P2: #{@sets.map{|s| s[1]}.join('|')} -  #{@game[1]}"
         end
     end
 end
