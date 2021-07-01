@@ -1,7 +1,7 @@
 require 'test/unit'
 require './src/tennis_scores.rb'
 
-class TestAdd < Test::Unit::TestCase
+class TennisScoresTest < Test::Unit::TestCase
     def setup
         @scoring = TennisScores.new    
     end
