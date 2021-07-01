@@ -23,22 +23,14 @@ class TennisScores
         loser_index = 1 - winner_index
 
         if @game[winner_index] == :adv || @game[winner_index] == 40 && ![40, :adv].include?(@game[loser_index])
-            @sets.last[winner_index] += 1
-            if @sets.last[winner_index] - @sets.last[loser_index] >= 2  # 2 games ahead
-                if @sets.last[winner_index] >= 6
-                    sets_won = @sets.count{|set| set[winner_index] > set[loser_index]}
-                    if @sets.length == 3 && sets_won >= 2
-                        @over = true
-                        @winner = player
-                        return @sets
-                    end
+            scoreSet(winner_index, loser_index)
 
-                    @sets.push([0,0])
-                end
-            end
+            return @sets if @over
+            
             if [@sets.last[winner_index], @sets.last[loser_index]] == [6, 6]
                 @tiebreak = true
             end
+
             @game = [0, 0]
         else
             @game[winner_index] = nextScore(@game[winner_index])
@@ -47,7 +39,7 @@ class TennisScores
             end
         end
 
-        [*@sets, @game]
+        [@sets, @game]
     end
 
     def scorePointTiebreak(player)
@@ -55,15 +47,35 @@ class TennisScores
         loser_index = 1 - winner_index
 
         @game[winner_index] += 1
-        if @game[winner_index] >= 7 && @game[winner_index] >= @game[loser_index] + 2
-            @sets.last[winner_index] += 1
-            @sets.push([0,0])
-            
-            @game = [0, 0]
+        if @game[winner_index] >= [7, @game[loser_index] + 2].max
+            scoreSet(winner_index, loser_index)
             @tiebreak = false
+
+            return @sets if @over
+
+            @game = [0, 0]
         end
 
-        [*@sets, @game]
+        [@sets, @game]
+    end
+
+    def scoreSet(winner_index, loser_index)
+        @sets.last[winner_index] += 1
+
+        winning_set = @sets.last[winner_index] >= [6, @sets.last[loser_index] + 2].max
+        winning_set_tb = @tiebreak && @sets.last[winner_index] == 7
+
+        if winning_set || winning_set_tb
+            sets_won = @sets.count do |set|
+                set[winner_index] > set[loser_index]
+            end
+            if @sets.length == 3 && sets_won >= 2
+                @over = true
+                @winner = winner_index + 1
+            end
+
+            @sets.push([0,0]) unless @over
+        end
     end
 
     def nextScore(score)
