@@ -9,7 +9,7 @@ loop do
 
     scoring = TennisScores.new
 
-    while (input = gets.chomp) && !scoring.over?
+    while !scoring.over? && (input = gets.chomp)
         break if input == 'stop'
         scoring_player = input.to_i
         if scoring_player > 2 || scoring_player < 1
